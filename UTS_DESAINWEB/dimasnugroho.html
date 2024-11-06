@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Form Input Nilai</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background: url('https://source.unsplash.com/random/1600x900?abstract') no-repeat center center fixed;
+            background-size: cover;
+            color: #333;
+        }
+        .container {
+            padding: 20px;
+            background-color: rgba(255, 255, 255, 0.9); /* Adding slight transparency */
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+            border-radius: 12px;
+            width: 320px;
+            text-align: center;
+            transition: transform 0.3s ease-in-out;
+        }
+        .container:hover {
+            transform: translateY(-5px);
+        }
+        h2 {
+            color: #333;
+            margin-bottom: 20px;
+        }
+        label {
+            display: block;
+            margin-bottom: 5px;
+            color: #555;
+            font-weight: bold;
+        }
+        input {
+            display: block;
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 15px;
+            border-radius: 5px;
+            border: 1px solid #ddd;
+            box-sizing: border-box;
+            font-size: 16px;
+        }
+        button {
+            padding: 10px;
+            width: 100%;
+            background-color: #5cb85c;
+            border: none;
+            color: #fff;
+            cursor: pointer;
+            font-size: 16px;
+            border-radius: 5px;
+            transition: background-color 0.3s;
+        }
+        button:hover {
+            background-color: #4cae4c;
+        }
+        #result {
+            margin-top: 20px;
+            font-weight: bold;
+            color: #333;
+        }
+    </style>
+    <script>
+        function validateForm() {
+            const nama = document.getElementById("nama").value;
+            const nilai1 = parseInt(document.getElementById("nilai1").value);
+            const nilai2 = parseInt(document.getElementById("nilai2").value);
+            const nilai3 = parseInt(document.getElementById("nilai3").value);
+            const resultDiv = document.getElementById("result");
+
+            // Validasi nama: tidak boleh mengandung simbol @#$ dan angka
+            const invalidNama = /[@#$0-9]/;
+            if (invalidNama.test(nama)) {
+                resultDiv.innerHTML = "Nama tidak boleh mengandung simbol @#$ atau angka.";
+                return false;
+            }
+
+            // Menghitung rata-rata
+            const average = (nilai1 + nilai2 + nilai3) / 3;
+            let grade;
+
+            if (average >= 87) grade = "A+";
+            else if (average >= 76) grade = "A";
+            else if (average >= 61) grade = "B";
+            else if (average >= 50) grade = "C";
+            else if (average >= 31) grade = "D";
+            else grade = "E";
+
+            // Menampilkan hasil
+            resultDiv.innerHTML = `Nama: ${nama}<br>Rata-rata: ${average.toFixed(2)}<br>Grade: ${grade}`;
+            return false; // Prevent form submission
+        }
+    </script>
+</head>
+<body>
+    <div class="container">
+        <h2>Form Input Nilai</h2>
+        <form id="nilaiForm" onsubmit="return validateForm()">
+            <label for="nama">Nama:</label>
+            <input type="text" id="nama" name="nama" required>
+            
+            <label for="nilai1">Nilai 1:</label>
+            <input type="number" id="nilai1" name="nilai1" min="0" max="100" required>
+            
+            <label for="nilai2">Nilai 2:</label>
+            <input type="number" id="nilai2" name="nilai2" min="0" max="100" required>
+            
+            <label for="nilai3">Nilai 3:</label>
+            <input type="number" id="nilai3" name="nilai3" min="0" max="100" required>
+            
+            <button type="submit">Hasil</button>
+        </form>
+        <div id="result"></div>
+    </div>
+</body>
+</html>
